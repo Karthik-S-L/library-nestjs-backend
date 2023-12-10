@@ -1,0 +1,10 @@
+Starting steps
+
+npm i -g @nestjs/cli
+nest new project-name
+
+nest g module book
+nest g controller  book
+nest g service book
+
+npm i mongoose @nestjs/mongoose @nestjs/config --save   
