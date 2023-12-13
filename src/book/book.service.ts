@@ -9,6 +9,7 @@ import mongoose, {
 import { AddBookDto } from './dto/add-book.dto';
 import { Book } from './schemas/book.schema';
 import { UpdateBookDto } from './dto/update-book.dto';
+import { OrderDirection, PaginationDto } from './dto/book-query.dto';
 
 @Injectable()
 export class BookService {
@@ -17,8 +18,22 @@ export class BookService {
     private readonly bookModel: mongoose.Model<Book>
   ) {}
 
-  async findAllBooks(): Promise<Book[]> {
-    const books = await this.bookModel.find();
+  async findAllBooks(paginationDto: PaginationDto): Promise<Book[]> {
+    const limit = parseInt(paginationDto?.limit as unknown as string) || 5;
+    const page = parseInt(paginationDto?.page as unknown as string) || 1;
+    let order: 1 | -1 = 1;
+    if (paginationDto?.order === OrderDirection.DESC) {
+      order = -1;
+    }
+
+    // Calculate the skip value based on the page and limit
+
+    const skip = (page - 1) * limit;
+    const books = await this.bookModel.aggregate([
+      { $skip: skip },
+      { $sort: { createdAt: order } },
+      { $limit: limit },
+    ]);
     return books;
   }
 

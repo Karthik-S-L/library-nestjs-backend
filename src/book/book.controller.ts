@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { BookService } from './book.service';
 import { AddBookDto } from './dto/add-book.dto';
-import { BookQueryDto } from './dto/book-query.dto';
+import { BookQueryDto, PaginationDto } from './dto/book-query.dto';
 import { Book } from './schemas/book.schema';
 
 @Controller('books')
@@ -28,8 +28,8 @@ export class BookController {
 
   //Get all books in the library
   @Get('/')
-  async getAllBooks(): Promise<Book[]> {
-    const books = await this.booksService.findAllBooks();
+  async getAllBooks(@Query() paginationDto: PaginationDto): Promise<Book[]> {
+    const books = await this.booksService.findAllBooks(paginationDto);
     return books;
   }
 
