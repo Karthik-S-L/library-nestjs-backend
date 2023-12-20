@@ -5,6 +5,7 @@ import {
   InternalServerErrorException,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -12,6 +13,7 @@ import { ExtractKeyFromRequest } from 'src/decorators/custom-request-data.decora
 import { SuccessResponseType, UserRequestType } from '../@types';
 import { User } from './schemas/user.schemas';
 import { UserQueryDto } from './dto/user-query.dto';
+import { JwtGuard } from 'src/guards/jwt-auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -29,19 +31,19 @@ export class UserController {
     };
   }
 
-  // @Get()
-  // async fetchUserDetails(
-  //   @ExtractKeyFromRequest('user') user: UserRequestType
-  // ): Promise<SuccessResponseType<User>> {
-  //   console.log(user);
-  //   const userData = await this.userService.fetchUserDetails(user);
-  //   return {
-  //     statusCode: 200,
-  //     message: `User info fetched successfully`,
-  //     result: userData,
-  //   };
-  // }
+  @Get()
+  async fetchUserDetails(
+    @ExtractKeyFromRequest('user') user: UserRequestType
+  ): Promise<SuccessResponseType<User>> {
+    const userData = await this.userService.fetchUserDetails(user);
+    return {
+      statusCode: 200,
+      message: `User info fetched successfully`,
+      result: userData,
+    };
+  }
 
+  @UseGuards(JwtGuard)
   @Get('userId/')
   async getUserById(
     @Query() userQueryDto: UserQueryDto
