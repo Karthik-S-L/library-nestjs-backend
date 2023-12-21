@@ -8,3 +8,8 @@ nest g controller  book
 nest g service book
 
 npm i mongoose @nestjs/mongoose @nestjs/config --save   
+
+//jwt-strategy
+while logging in we login by validating user's password.
+But for other apis if we want to allow access to only logged in user we use a jwt guard to check for the accesstoke
+If accessToken is present we allow login 

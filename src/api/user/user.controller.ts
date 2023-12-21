@@ -31,6 +31,7 @@ export class UserController {
     };
   }
 
+  //todo: fix ExtractKeyFromRequest
   @Get()
   async fetchUserDetails(
     @ExtractKeyFromRequest('user') user: UserRequestType

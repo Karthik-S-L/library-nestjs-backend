@@ -1,13 +1,13 @@
 import { Module, forwardRef } from '@nestjs/common';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { UserService } from '../user/user.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
-import { UserModule } from '../user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from '../user/schemas/user.schemas';
-import { LocalStrategy } from './strategies/local-strategy';
+import { UserModule } from '../user/user.module';
+import { UserService } from '../user/user.service';
+import { AuthController } from './auth.controller';
+import { AuthService } from './auth.service';
 import { JwtStrategy } from './strategies/jwt-strategy';
+import { LocalStrategy } from './strategies/local-strategy';
 import { RefreshJwtStrategy } from './strategies/refresh-token.strategy';
 
 @Module({
