@@ -1,0 +1,26 @@
+version: '3.9' #version is not required but recomended should be above 3
+
+services:
+  mongo_db:
+    container_name: mongo_db_container #container name can be anything
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongo_db:/data/db #to save data and to avoid data being lost after container being restarted
+
+  nest_api:
+    container_name: nest_api_container #container name can be anything
+    build: . #to build DockerFile . is the path
+    ports:
+      - 3000:3000 # localmachineport:dockerport
+    environment:
+      - PORT=3000
+      - MONGO_DB_URI=mongodb://mongo_db:27017/library-nestjs-backend
+      - JWT_SECRET=sd!kjfdi32
+      - JWT_EXPIRE_TIME=200s
+      - JWT_REFRESH_EXPIRE_TIME=3600s
+    depends_on:
+      - mongo_db #This container will only be started after service-> mongo_db
+
+volumes:
+  mongo_db: {}
