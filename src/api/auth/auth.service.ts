@@ -35,6 +35,7 @@ export class AuthService {
         secret: process.env['JWT_SECRET'],
         expiresIn: process.env['JWT_EXPIRE_TIME'],
       }),
+      tokenType: 'Bearer',
       refreshToken: this.jwtService.sign(payload, {
         secret: process.env['JWT_SECRET'],
         expiresIn: process.env['JWT_REFRESH_EXPIRE_TIME'],
