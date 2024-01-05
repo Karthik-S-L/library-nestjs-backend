@@ -9,6 +9,7 @@ import { UserModule } from './api/user/user.module';
 import { BookModule } from './api/book/book.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from './guards/jwt-auth.guard';
+import { ChatgptModule } from './api/chatgpt/chatgpt.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { JwtGuard } from './guards/jwt-auth.guard';
     BookModule,
     AuthModule,
     UserModule,
+    ChatgptModule,
   ],
   controllers: [AppController],
   providers: [
